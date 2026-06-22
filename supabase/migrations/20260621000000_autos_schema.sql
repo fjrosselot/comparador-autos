@@ -63,3 +63,7 @@ grant usage on schema autos to anon, authenticated, service_role;
 grant select on all tables in schema autos to anon, authenticated;
 grant insert, update on autos.comparaciones to anon, authenticated;
 alter default privileges in schema autos grant select on tables to anon, authenticated;
+
+-- Expose schema via PostgREST (required for .schema('autos') in Supabase JS client)
+alter role authenticator set pgrst.db_schemas to 'public, autos';
+notify pgrst, 'reload config';
