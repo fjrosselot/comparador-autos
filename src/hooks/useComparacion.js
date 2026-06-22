@@ -6,7 +6,7 @@ export function useComparacion() {
   const [saved, setSaved] = useState([])
 
   useEffect(() => {
-    supabase.schema('autos').from('comparaciones')
+    supabase.from('autos_comparaciones')
       .select('id, nombre, modelo_ids, pesos, parametros_tco')
       .order('created_at', { ascending: false })
       .limit(20)
@@ -26,7 +26,7 @@ export function useComparacion() {
   function clear() { setSelectedIds([]) }
 
   async function save(nombre, pesos, parametrosTco) {
-    const { data, error } = await supabase.schema('autos').from('comparaciones')
+    const { data, error } = await supabase.from('autos_comparaciones')
       .insert({ nombre, modelo_ids: selectedIds, pesos, parametros_tco: parametrosTco })
       .select().single()
     if (error) throw new Error(error.message)

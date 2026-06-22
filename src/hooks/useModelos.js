@@ -11,8 +11,8 @@ export function useModelos(filters = {}) {
     setLoading(true)
 
     async function fetch() {
-      let q = supabase.schema('autos').from('modelos')
-        .select('*, marcas(nombre, logo_url)')
+      let q = supabase.from('autos_modelos')
+        .select('*')
         .eq('activo', true)
         .order('precio_contado', { ascending: true })
 

@@ -11,7 +11,7 @@ export function useSpecs(modeloIds = []) {
     setLoading(true)
 
     async function fetch() {
-      const { data } = await supabase.schema('autos').from('specs')
+      const { data } = await supabase.from('autos_specs')
         .select('modelo_id, datos')
         .in('modelo_id', modeloIds)
         .order('created_at', { ascending: false })
