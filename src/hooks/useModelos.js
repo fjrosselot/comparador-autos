@@ -23,8 +23,12 @@ export function useModelos(filters = {}) {
 
       const { data, error } = await q
       if (!cancelled) {
-        setModelos(data ?? [])
-        setError(error)
+        if (error) {
+          setError(error)
+        } else {
+          setModelos(data ?? [])
+          setError(null)
+        }
         setLoading(false)
       }
     }
