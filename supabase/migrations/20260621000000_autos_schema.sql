@@ -57,3 +57,9 @@ create policy "public read specs"       on autos.specs       for select using (t
 create policy "public read comparaciones" on autos.comparaciones for select using (true);
 create policy "public insert comparaciones" on autos.comparaciones for insert with check (true);
 create policy "public update comparaciones" on autos.comparaciones for update using (true);
+
+-- Grant schema access to anon/authenticated (required for non-public schemas)
+grant usage on schema autos to anon, authenticated, service_role;
+grant select on all tables in schema autos to anon, authenticated;
+grant insert, update on autos.comparaciones to anon, authenticated;
+alter default privileges in schema autos grant select on tables to anon, authenticated;
