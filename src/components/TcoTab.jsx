@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { useModelos } from '../hooks/useModelos'
 import { useSpecs } from '../hooks/useSpecs'
 import { calcTCO, calcPrepayAnalysis } from '../utils/tco'
