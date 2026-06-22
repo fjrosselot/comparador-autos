@@ -19,7 +19,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
       <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-        <h1 className="text-lg font-semibold text-slate-700">Comparador de Autos Chile</h1>
+        <h1 className="text-lg font-semibold text-slate-700">Comparador de Autos Chile <span className="text-xs font-normal text-slate-400">v0.1.0</span></h1>
         {comparacion.selectedIds.length > 0 && (
           <span className="text-sm text-slate-500">
             {comparacion.selectedIds.length} seleccionado{comparacion.selectedIds.length > 1 ? 's' : ''}
