@@ -9,6 +9,7 @@ const COMB = {
   BEV:      { bg: 'bg-blue-100',  fg: 'text-blue-700',  label: 'BEV' },
   HEV:      { bg: 'bg-teal-100',  fg: 'text-teal-700',  label: 'HEV' },
   gasolina: { bg: 'bg-slate-100', fg: 'text-slate-600', label: 'Gasolina' },
+  diesel:   { bg: 'bg-amber-100', fg: 'text-amber-700', label: 'Diésel' },
 }
 
 function StatTile({ icon: Icon, label, value, accent }) {
