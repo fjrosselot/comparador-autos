@@ -45,7 +45,7 @@ function Group({ icon: Icon, title, children }) {
   )
 }
 
-export default function SpecDetailPanel({ modelo, specs, inComparison, onToggleComparison, onClose }) {
+export default function SpecDetailPanel({ modelo, specs, siblings = [], onSwitchVersion, inComparison, onToggleComparison, onClose }) {
   if (!modelo) {
     return (
       <div className="flex items-center justify-center h-full px-6 text-center">
@@ -78,6 +78,24 @@ export default function SpecDetailPanel({ modelo, specs, inComparison, onToggleC
           <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${c.bg} ${c.fg}`}>{c.label}</span>
           <span className="text-xl font-bold ml-auto text-slate-800">{fmtCLP(modelo.precio_contado ?? modelo.precio_lista)}</span>
         </div>
+        {siblings.length > 1 && (
+          <div className="flex items-center gap-1.5 mt-3 flex-wrap">
+            <span className="text-[10px] uppercase tracking-wide text-slate-400 mr-0.5">Versión</span>
+            {siblings.map(s => (
+              <button
+                key={s.id}
+                onClick={() => onSwitchVersion?.(s.id)}
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-colors ${
+                  s.id === modelo.id
+                    ? 'bg-slate-700 text-white border-slate-700'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
+                }`}
+              >
+                {s.version}
+              </button>
+            ))}
+          </div>
+        )}
         <button
           onClick={onToggleComparison}
           className={`flex items-center justify-center gap-2 w-full mt-3 py-2 rounded-xl text-[13px] font-semibold transition-colors ${
