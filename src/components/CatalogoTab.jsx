@@ -21,6 +21,15 @@ const PRECIO_OPTS = [
   { label: 'Hasta $25M', value: 25_000_000 },
   { label: 'Hasta $30M', value: 30_000_000 },
   { label: 'Hasta $35M', value: 35_000_000 },
+  { label: 'Hasta $40M', value: 40_000_000 },
+]
+
+const TORQUE_OPTS = [
+  { label: 'Torque: Todos', value: null },
+  { label: '≥ 230 Nm', value: 230 },
+  { label: '≥ 250 Nm', value: 250 },
+  { label: '≥ 300 Nm', value: 300 },
+  { label: '≥ 400 Nm', value: 400 },
 ]
 const SORTS = [
   { id: 'precio-asc',  label: 'Precio ↑' },
@@ -144,6 +153,7 @@ export default function CatalogoTab({ comparacion, onGoCompare }) {
   const [comb, setComb] = useState('Todos')
   const [tipo, setTipo] = useState('')
   const [precioMax, setPrecioMax] = useState(null)
+  const [torqueMin, setTorqueMin] = useState(null)
   const [sort, setSort] = useState('precio-asc')
   const [detailId, setDetailId] = useState(null)
   const [expanded, setExpanded] = useState([])
@@ -156,12 +166,20 @@ export default function CatalogoTab({ comparacion, onGoCompare }) {
 
   const { modelos, loading, error } = useModelos(filters)
 
-  // Filtrar por búsqueda, luego agrupar por grupo_id
+  const allModeloIds = useMemo(() => modelos.map(m => m.id), [modelos])
+  const { specsMap: allSpecsMap } = useSpecs(allModeloIds)
+
+  // Filtrar por búsqueda + torque, luego agrupar por grupo_id
   const groups = useMemo(() => {
     const q = query.trim().toLowerCase()
-    const rows = modelos.filter(m =>
-      !q || `${m.marcas?.nombre ?? ''} ${m.nombre} ${m.version}`.toLowerCase().includes(q)
-    )
+    const rows = modelos.filter(m => {
+      if (q && !`${m.marcas?.nombre ?? ''} ${m.nombre} ${m.version}`.toLowerCase().includes(q)) return false
+      if (torqueMin) {
+        const torque = allSpecsMap[m.id]?.datos?.motor?.torqueNm
+        if (!torque || torque < torqueMin) return false
+      }
+      return true
+    })
     const byGroup = new Map()
     for (const m of rows) {
       const key = m.grupo_id ?? m.id
@@ -175,15 +193,17 @@ export default function CatalogoTab({ comparacion, onGoCompare }) {
     }
     const arr = [...byGroup.values()]
     arr.forEach(g => g.versions.sort((a, b) => precioOf(a) - precioOf(b)))
-    arr.sort((a, b) => {
+    // Eliminar grupos donde todas las versiones fueron filtradas
+    const filtered = arr.filter(g => g.versions.length > 0)
+    filtered.sort((a, b) => {
       const pa = Math.min(...a.versions.map(precioOf))
       const pb = Math.min(...b.versions.map(precioOf))
       if (sort === 'precio-asc')  return pa - pb
       if (sort === 'precio-desc') return pb - pa
       return `${a.marca} ${a.nombre}`.localeCompare(`${b.marca} ${b.nombre}`)
     })
-    return arr
-  }, [modelos, query, sort])
+    return filtered
+  }, [modelos, query, sort, torqueMin, allSpecsMap])
 
   function toggleExpand(gid) {
     setExpanded(prev => prev.includes(gid) ? prev.filter(g => g !== gid) : [...prev, gid])
@@ -221,6 +241,10 @@ export default function CatalogoTab({ comparacion, onGoCompare }) {
         <select value={precioMax ?? ''} onChange={e => setPrecioMax(e.target.value ? parseInt(e.target.value) : null)}
           className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700">
           {PRECIO_OPTS.map(o => <option key={o.label} value={o.value ?? ''}>{o.label}</option>)}
+        </select>
+        <select value={torqueMin ?? ''} onChange={e => setTorqueMin(e.target.value ? parseInt(e.target.value) : null)}
+          className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700">
+          {TORQUE_OPTS.map(o => <option key={o.label} value={o.value ?? ''}>{o.label}</option>)}
         </select>
         <div className="flex items-center gap-1.5">
           <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" />
