@@ -12,9 +12,9 @@ PS  = b64("ps.b64")        # IBM Plex Sans variable (400-600)
 # ---------------------------------------------------------------- TCO data
 tco_rows = [
     ("Chevrolet Captiva PHEV", "Premier", "PHEV", 26_990_000, 18_240_389, 3_408_078, "phev"),
-    ("Chevrolet Captiva EV", "Premier 60kWh", "BEV", 28_990_000, 20_271_825, 3_814_365, "bev"),
-    ("Skoda Elroq", "85 Design · oferta", "BEV", 29_990_000, 20_712_138, 3_902_428, "bev"),
-    ("Mitsubishi Outlander PHEV", "GLS", "PHEV", 39_490_000, 22_358_649, 4_231_730, "phev"),
+    ("Chevrolet Captiva EV", "60kWh", "BEV", 27_990_000, 19_671_825, 3_694_365, "bev"),
+    ("Skoda Elroq", "85 Design · bono directo", "BEV", 39_990_000, 26_712_138, 5_102_428, "bev"),
+    ("Mitsubishi Outlander PHEV", "GLS Limited", "PHEV", 39_990_000, 22_588_649, 4_277_730, "phev"),
     ("Mitsubishi Destinator", "GL", "Gasolina", 20_490_000, 22_677_180, 4_535_436, "ice"),
     ("Mitsubishi Outlander", "GL 4x2", "Gasolina", 25_990_000, 23_366_304, 4_673_261, "ice"),
     ("Peugeot 5008", "Allure MHEV", "Gasolina", 28_990_000, 25_589_262, 5_117_852, "ice"),
@@ -24,7 +24,7 @@ tco_rows = [
     ("Mitsubishi Outlander", "GLS Limited 4x4", "Gasolina", 38_990_000, 28_826_304, 5_765_261, "ice"),
     ("Skoda Kodiaq", "Selection MHEV", "Gasolina", 34_690_000, 30_072_334, 6_014_467, "ice"),
     ("Kia EV5", "Wave 88.1kWh AWD", "BEV", 41_990_000, 30_223_200, 5_804_640, "bev"),
-    ("Tesla Model Y", "Premium Long Range RWD · bono Scotiabank", "BEV", 32_900_000, 21_653_475, 4_090_695, "bev"),
+    ("Tesla Model Y", "Premium Long Range RWD", "BEV", 39_900_000, 25_713_475, 4_902_695, "bev"),
 ]
 tco_rows.sort(key=lambda r: r[5])
 max_anual = max(r[5] for r in tco_rows)
@@ -32,14 +32,14 @@ max_anual = max(r[5] for r in tco_rows)
 # ---------------------------------------------------------------- Comfort matrix
 MODELS = [
     ("elroq", "Skoda Elroq", "85 Design", "bev"),
-    ("cev", "Chevrolet Captiva EV", "Premier", "bev"),
+    ("cev", "Chevrolet Captiva EV", "60kWh", "bev"),
     ("tsy", "Tesla Model Y", "Premium LR RWD", "bev"),
     ("p19", "Peugeot 5008", "GT Line 2019 · tuyo", "ref"),
     ("p26", "Peugeot 5008", "GT 2026", "ice"),
     ("kod", "Skoda Kodiaq", "Selection MHEV", "ice"),
     ("ev5", "Kia EV5", "Wave", "bev"),
     ("outl", "Mitsubishi Outlander", "GLS Limited", "ice"),
-    ("outp", "Mitsubishi Outlander", "PHEV GLS", "phev"),
+    ("outp", "Mitsubishi Outlander", "PHEV GLS Limited", "phev"),
     ("dest", "Mitsubishi Destinator", "GLS", "ice"),
 ]
 
@@ -122,6 +122,53 @@ def tco_rows_html():
             </div>
           </td>
         </tr>'''.replace(",", "."))
+    return "\n".join(out)
+
+# ---------------------------------------------------------------- Combined score
+W_TCO, W_COMFORT = 0.60, 0.40
+tco_total5_by_key = {
+    "elroq": 26_712_138, "cev": 19_671_825, "tsy": 25_713_475, "p19": None,
+    "p26": 28_339_262, "kod": 30_072_334, "ev5": 30_223_200,
+    "outl": 28_826_304, "outp": 22_588_649, "dest": 27_139_680,
+}
+val = {Y: 1.0, N: 0.0, W: 0.5}
+comfort_raw_by_key = {key: sum(val[row[1][i]] for row in matrix) for i, (key, *_r) in enumerate(MODELS)}
+n_items = len(matrix)
+
+score_candidates = [k for k, *_ in MODELS if tco_total5_by_key[k] is not None]
+_tco_vals = [tco_total5_by_key[k] for k in score_candidates]
+_tco_min, _tco_max = min(_tco_vals), max(_tco_vals)
+_comf_vals = [comfort_raw_by_key[k] for k in score_candidates]
+_comf_min, _comf_max = min(_comf_vals), max(_comf_vals)
+
+score_rows = []
+for key, brand, trim, energy in MODELS:
+    if tco_total5_by_key[key] is None:
+        continue
+    tco_s = (_tco_max - tco_total5_by_key[key]) / (_tco_max - _tco_min) * 100
+    comf_s = (comfort_raw_by_key[key] - _comf_min) / (_comf_max - _comf_min) * 100
+    combined = W_TCO * tco_s + W_COMFORT * comf_s
+    score_rows.append((brand, trim, energy, tco_s, comf_s, combined))
+score_rows.sort(key=lambda r: -r[5])
+
+def score_rows_html():
+    out = []
+    for brand, trim, energy, tco_s, comf_s, combined in score_rows:
+        out.append(f'''<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-{energy}">{energy.upper()}</span>
+            <span class="tco-brand">{html.escape(brand)}</span>
+            <span class="tco-trim">{html.escape(trim)}</span>
+          </td>
+          <td class="score-sub">{tco_s:.0f}</td>
+          <td class="score-sub">{comf_s:.0f}</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:{combined:.1f}%"></div>
+              <span class="tco-anual-num">{combined:.1f}</span>
+            </div>
+          </td>
+        </tr>''')
     return "\n".join(out)
 
 html_doc = f'''<style>
@@ -392,6 +439,15 @@ section {{
   background: var(--accent);
   opacity: 0.28;
 }}
+.score-bar {{ background: var(--steel); opacity: 0.32; }}
+.score-sub {{
+  font-family: "Plex Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  width: 70px;
+}}
 .tco-anual-num {{
   position: relative;
   display: block;
@@ -595,6 +651,29 @@ table.matrix {{
 
   <section>
     <div class="section-head">
+      <h2 class="section-title">Puntaje combinado</h2>
+      <span class="section-note">60% TCO · 40% confort · normalizado dentro de los 9 candidatos</span>
+    </div>
+    <table class="tco-table">
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th class="num">TCO score</th>
+          <th class="num">Confort score</th>
+          <th class="num">Combinado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {score_rows_html()}
+      </tbody>
+    </table>
+    <div class="legend">
+      <span>Normalización min-max: el más caro/pelado del grupo saca 0, el más barato/equipado saca 100 — sensible a outliers, ver nota abajo.</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
       <h2 class="section-title">Equipamiento de confort</h2>
       <span class="section-note">21 ítems · trims tope de cada modelo</span>
     </div>
@@ -637,8 +716,8 @@ table.matrix {{
       <p>Precio, potencia y ADAS de seguridad vienen casi siempre de ficha oficial (confianza alta). Mantención anual y reventa a 5 años son estimaciones — ningún modelo 2025-2026 tiene historial real en Chile todavía.</p>
     </div>
     <div>
-      <h3>Tesla Model Y — caveat</h3>
-      <p>tesla.com/es_cl bloquea el scraping — precio y ficha se tomaron de tu captura de pantalla (fuente primaria) y se completaron con datos del trim global equivalente. El bono Scotiabank de $7M vence 31-jul-2026; no se confirmó en texto explícito si aplica también a compra al contado o solo financiada.</p>
+      <h3>Precios revalidados 17-jul</h3>
+      <p>El supuesto "bono Scotiabank $7M" del Model Y resultó ser una campaña de Banco Santander ya vencida (31-may-2026) — Scotiabank solo da tasa preferencial, no bono en efectivo. Precio real hoy: $39,9M, sin descuento. El Elroq también perdió su oferta "Mes del Rock" ($29,99M → $39,99M) — verificado dos veces en skoda.cl, sin encontrarla vigente (a la espera de que confirmes dónde la viste, por si el sitio la trae de vuelta).</p>
     </div>
   </div>
 

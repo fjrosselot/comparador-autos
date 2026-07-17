@@ -18,45 +18,29 @@ el scratchpad de sesión (`/tmp/claude-1000/...`) se borra; esto no.
   el mismo `file_path` (mantiene la URL).
 
 ## Candidatos actuales (10, 9 comprables + 1 referencia)
-Precio = precio contado usado en TCO, verificado la última vez el 17-jul-2026
-salvo donde se indica.
+Precio = precio contado usado en TCO. **Revalidados en vivo el 17-jul-2026**
+contra el sitio oficial de cada marca (no agregadores) — ver hallazgos abajo.
 
-| Modelo | Trim (comfort) | Precio contado | Última verificación |
+| Modelo | Trim (comfort) | Precio contado | Notas |
 |---|---|---|---|
-| Skoda Elroq | 85 Design | $29.990.000 (oferta "Mes del Rock") | 16-jul — oferta sin confirmar vigencia/condiciones, "hasta agotar stock" |
-| Chevrolet Captiva EV | Premier 60kWh | $28.990.000 | 15-jul |
-| Tesla Model Y | Premium LR RWD | $32.900.000 (con bono Scotiabank $7M, vence 31-jul-2026) | 17-jul — precio base tomado de captura de pantalla del usuario, no de fetch directo (tesla.com bloquea scraping). No confirmado si el bono aplica al contado o solo financiado |
-| Mitsubishi Outlander PHEV | GLS | $39.490.000 | 15-jul |
-| Mitsubishi Outlander | GLS Limited 4x4 (bencina) | $38.990.000 | 15-jul |
-| Peugeot 5008 | GT 2026 (MHEV) | $33.990.000 | 15-jul |
-| Skoda Kodiaq | Selection MHEV | $34.690.000 (con bono, lista $37.190.000) | 15-jul |
-| Kia EV5 | Wave 88.1kWh AWD | $41.990.000 | **17-jul, corregido** — precio anterior ($49,99M) estaba mal, verificado en vivo contra kia.cl/promociones con agent-browser |
-| Kia EV5 | Light 64.2kWh FWD | $31.990.000 | **17-jul, corregido** — anterior $39,99M estaba mal |
-| Mitsubishi Destinator | GLS | $28.990.000 | 15-jul |
+| Skoda Elroq | 85 Design | $39.990.000 (bono directo) | La oferta "Mes del Rock" ($29,99M) NO se encontró vigente en 2 verificaciones independientes (WebFetch + agent-browser) contra skoda.cl. Usuario insiste en que sigue existiendo — pendiente que confirme fuente/screenshot |
+| Chevrolet Captiva EV | 60kWh | $27.990.000 | bajó $1M vs. dato anterior ($28,99M) |
+| Tesla Model Y | Premium LR RWD | $39.900.000 | El "bono Scotiabank $7M" no existe — era campaña Banco Santander, vencida 31-may-2026. Scotiabank solo da tasa preferencial (0,99%), no bono en efectivo. Precio confirmado en vivo en el configurador tesla.com/es_cl, sin descuento visible |
+| Mitsubishi Outlander PHEV | GLS Limited | $39.990.000 | La versión "GLS" (no Limited) ya no existe en el catálogo — solo queda GLS Limited. Subió $500k vs. dato anterior |
+| Mitsubishi Outlander | GLS Limited 4x4 (bencina) | $38.990.000 | sin cambio |
+| Peugeot 5008 | GT 2026 (MHEV) | $33.990.000 | sin cambio |
+| Skoda Kodiaq | Selection MHEV | $34.690.000 (con bono, lista $37.190.000) | sin cambio |
+| Kia EV5 | Wave 88.1kWh AWD | $41.990.000 | corregido 17-jul (antes $49,99M, mal) |
+| Kia EV5 | Light 64.2kWh FWD | $31.990.000 | corregido 17-jul (antes $39,99M, mal) |
+| Mitsubishi Destinator | GLS | $28.990.000 | sin cambio, promo vigente hasta 31-jul-2026 |
 | *(referencia, no candidato)* Peugeot 5008 GT Line 2019 | tuyo | — | ficha de equipamiento, no de precio |
 
-## Pendiente para esta noche (revalidación completa)
-El usuario pidió repasar TODOS los precios de nuevo (no solo Kia, que ya se
-corrigió) porque encontramos que agregadores (chileautos.cl, autocosmos.cl)
-pueden estar desactualizados vs. el sitio oficial de la marca. Se decidió
-posponer para no gastar tokens de la ventana de 5h en curso.
-
-Tarea para la sesión nocturna:
-1. Para cada uno de los 10 modelos de la tabla arriba, verificar precio
-   **vigente hoy** directo en el sitio oficial de la marca (usar agent-browser
-   si WebFetch da 403/vacío — varios sitios bloquean scraping directo, ver
-   notas de sesión: chevrolet.cl, tesla.com, mitsubishi-motors.cl).
-2. Prestar atención especial a: condiciones de bonos (¿aplican al contado o
-   solo financiado?, ¿con qué banco?, ¿vigencia real?), porque ya se encontró
-   un caso (Kia) donde el precio "lista" cambió y otro (Tesla) donde no se
-   pudo verificar en vivo.
-3. Actualizar `tco_v3.mjs` (precio_contado/precio_lista) y `build_artifact.py`
-   (tco_rows) con los valores corregidos.
-4. Recalcular con `node tco_v3.mjs` y `python3 score.py`.
-5. Regenerar el artifact (`python3 build_artifact.py`) y republicar con
-   `Artifact({file_path: ".../comparador-autos.html", url: "<url de arriba>"})`
-   pasando la URL existente para no perder el link.
-6. Avisar al usuario con la tabla de precios que cambiaron (si alguno).
+Todos los precios de la tabla verificados con fetch directo y/o agent-browser
+contra el sitio oficial de la marca el 17-jul-2026, salvo Elroq (disputado)
+y Peugeot/Destinator (verificados contra dealer oficial, marca no publica
+precio directo). Rutina cloud programada para revalidación nocturna
+(`trig_01MBu9cxnhPfDdccsshHbGYj`) quedó **desactivada** — se hizo en vivo
+en la misma sesión al reiniciarse la ventana de 5h.
 
 ## Metodología del puntaje combinado (score.py)
 - TCO score y Confort score se normalizan 0-100 (min-max) **dentro del grupo

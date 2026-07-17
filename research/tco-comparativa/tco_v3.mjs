@@ -52,8 +52,8 @@ const CANDIDATES = [
     datos: { consumo: { mixtoL100: 7.75 }, mantencion: { anualCLP: 450_000 }, reventa: { pct5yr: 0.50 } },
   },
   {
-    brand: 'Skoda Elroq', trim: '85 Design (BEV) — oferta $29,99M',
-    combustible: 'BEV', precio_lista: 44_990_000, precio_contado: 29_990_000,
+    brand: 'Skoda Elroq', trim: '85 Design (BEV) — bono directo',
+    combustible: 'BEV', precio_lista: 44_990_000, precio_contado: 39_990_000,
     datos: { consumo: { electricoKwh100: 15.15 }, mantencion: { anualCLP: 215_000 }, reventa: { pct5yr: 0.40 } },
   },
   {
@@ -72,13 +72,13 @@ const CANDIDATES = [
     datos: { electrico: { autonomiaKm: 90 }, consumo: { electricoKwh100: 22.8, mixtoL100: 6.1 }, mantencion: { anualCLP: 230_000 }, reventa: { pct5yr: 0.45 } },
   },
   {
-    brand: 'Chevrolet Captiva EV', trim: 'Premier 60kWh (BEV)',
-    combustible: 'BEV', precio_lista: 28_990_000, precio_contado: 28_990_000,
+    brand: 'Chevrolet Captiva EV', trim: '60kWh (BEV)',
+    combustible: 'BEV', precio_lista: 27_990_000, precio_contado: 27_990_000,
     datos: { consumo: { electricoKwh100: 18.9 }, mantencion: { anualCLP: 225_000 }, reventa: { pct5yr: 0.40 } },
   },
   {
-    brand: 'Tesla Model Y', trim: 'Premium Long Range RWD — bono Scotiabank',
-    combustible: 'BEV', precio_lista: 39_990_000, precio_contado: 32_900_000,
+    brand: 'Tesla Model Y', trim: 'Premium Long Range RWD',
+    combustible: 'BEV', precio_lista: 39_900_000, precio_contado: 39_900_000,
     datos: { consumo: { electricoKwh100: 12.7 }, mantencion: { anualCLP: 200_000 }, reventa: { pct5yr: 0.42 } },
   },
   {
@@ -102,8 +102,8 @@ const CANDIDATES = [
     datos: { consumo: { mixtoL100: 8.1 }, mantencion: { anualCLP: 300_000 }, reventa: { pct5yr: 0.58 } },
   },
   {
-    brand: 'Mitsubishi Outlander PHEV', trim: 'GLS',
-    combustible: 'PHEV', precio_lista: 43_990_000, precio_contado: 39_490_000,
+    brand: 'Mitsubishi Outlander PHEV', trim: 'GLS Limited',
+    combustible: 'PHEV', precio_lista: 42_990_000, precio_contado: 39_990_000,
     datos: { electrico: { autonomiaKm: 83 }, consumo: { electricoKwh100: 17.5, mixtoL100: 7.5 }, mantencion: { anualCLP: 400_000 }, reventa: { pct5yr: 0.54 } },
   },
   {

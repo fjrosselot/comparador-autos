@@ -266,6 +266,15 @@ section {
   background: var(--accent);
   opacity: 0.28;
 }
+.score-bar { background: var(--steel); opacity: 0.32; }
+.score-sub {
+  font-family: "Plex Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  width: 70px;
+}
 .tco-anual-num {
   position: relative;
   display: block;
@@ -481,44 +490,14 @@ table.matrix {
           <td class="tco-model">
             <span class="tco-tag tco-tag-bev">BEV</span>
             <span class="tco-brand">Chevrolet Captiva EV</span>
-            <span class="tco-trim">Premier 60kWh</span>
+            <span class="tco-trim">60kWh</span>
           </td>
-          <td class="tco-num">$28.990.000</td>
-          <td class="tco-num">$20.271.825</td>
+          <td class="tco-num">$27.990.000</td>
+          <td class="tco-num">$19.671.825</td>
           <td class="tco-anual">
             <div class="tco-bar-wrap">
-              <div class="tco-bar" style="width:63.4%"></div>
-              <span class="tco-anual-num">$3.814.365</span>
-            </div>
-          </td>
-        </tr>
-<tr>
-          <td class="tco-model">
-            <span class="tco-tag tco-tag-bev">BEV</span>
-            <span class="tco-brand">Skoda Elroq</span>
-            <span class="tco-trim">85 Design · oferta</span>
-          </td>
-          <td class="tco-num">$29.990.000</td>
-          <td class="tco-num">$20.712.138</td>
-          <td class="tco-anual">
-            <div class="tco-bar-wrap">
-              <div class="tco-bar" style="width:64.9%"></div>
-              <span class="tco-anual-num">$3.902.428</span>
-            </div>
-          </td>
-        </tr>
-<tr>
-          <td class="tco-model">
-            <span class="tco-tag tco-tag-bev">BEV</span>
-            <span class="tco-brand">Tesla Model Y</span>
-            <span class="tco-trim">Premium Long Range RWD · bono Scotiabank</span>
-          </td>
-          <td class="tco-num">$32.900.000</td>
-          <td class="tco-num">$21.653.475</td>
-          <td class="tco-anual">
-            <div class="tco-bar-wrap">
-              <div class="tco-bar" style="width:68.0%"></div>
-              <span class="tco-anual-num">$4.090.695</span>
+              <div class="tco-bar" style="width:61.4%"></div>
+              <span class="tco-anual-num">$3.694.365</span>
             </div>
           </td>
         </tr>
@@ -526,14 +505,14 @@ table.matrix {
           <td class="tco-model">
             <span class="tco-tag tco-tag-phev">PHEV</span>
             <span class="tco-brand">Mitsubishi Outlander PHEV</span>
-            <span class="tco-trim">GLS</span>
+            <span class="tco-trim">GLS Limited</span>
           </td>
-          <td class="tco-num">$39.490.000</td>
-          <td class="tco-num">$22.358.649</td>
+          <td class="tco-num">$39.990.000</td>
+          <td class="tco-num">$22.588.649</td>
           <td class="tco-anual">
             <div class="tco-bar-wrap">
-              <div class="tco-bar" style="width:70.4%"></div>
-              <span class="tco-anual-num">$4.231.730</span>
+              <div class="tco-bar" style="width:71.1%"></div>
+              <span class="tco-anual-num">$4.277.730</span>
             </div>
           </td>
         </tr>
@@ -579,6 +558,36 @@ table.matrix {
             <div class="tco-bar-wrap">
               <div class="tco-bar" style="width:77.7%"></div>
               <span class="tco-anual-num">$4.673.261</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-bev">BEV</span>
+            <span class="tco-brand">Tesla Model Y</span>
+            <span class="tco-trim">Premium Long Range RWD</span>
+          </td>
+          <td class="tco-num">$39.900.000</td>
+          <td class="tco-num">$25.713.475</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar" style="width:81.5%"></div>
+              <span class="tco-anual-num">$4.902.695</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-bev">BEV</span>
+            <span class="tco-brand">Skoda Elroq</span>
+            <span class="tco-trim">85 Design · bono directo</span>
+          </td>
+          <td class="tco-num">$39.990.000</td>
+          <td class="tco-num">$26.712.138</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar" style="width:84.8%"></div>
+              <span class="tco-anual-num">$5.102.428</span>
             </div>
           </td>
         </tr>
@@ -678,6 +687,163 @@ table.matrix {
 
   <section>
     <div class="section-head">
+      <h2 class="section-title">Puntaje combinado</h2>
+      <span class="section-note">60% TCO · 40% confort · normalizado dentro de los 9 candidatos</span>
+    </div>
+    <table class="tco-table">
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th class="num">TCO score</th>
+          <th class="num">Confort score</th>
+          <th class="num">Combinado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-phev">PHEV</span>
+            <span class="tco-brand">Mitsubishi Outlander</span>
+            <span class="tco-trim">PHEV GLS Limited</span>
+          </td>
+          <td class="score-sub">72</td>
+          <td class="score-sub">53</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:64.6%"></div>
+              <span class="tco-anual-num">64.6</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-bev">BEV</span>
+            <span class="tco-brand">Chevrolet Captiva EV</span>
+            <span class="tco-trim">60kWh</span>
+          </td>
+          <td class="score-sub">100</td>
+          <td class="score-sub">0</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:60.0%"></div>
+              <span class="tco-anual-num">60.0</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-ice">ICE</span>
+            <span class="tco-brand">Peugeot 5008</span>
+            <span class="tco-trim">GT 2026</span>
+          </td>
+          <td class="score-sub">18</td>
+          <td class="score-sub">100</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:50.7%"></div>
+              <span class="tco-anual-num">50.7</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-bev">BEV</span>
+            <span class="tco-brand">Tesla Model Y</span>
+            <span class="tco-trim">Premium LR RWD</span>
+          </td>
+          <td class="score-sub">43</td>
+          <td class="score-sub">47</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:44.5%"></div>
+              <span class="tco-anual-num">44.5</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-ice">ICE</span>
+            <span class="tco-brand">Mitsubishi Outlander</span>
+            <span class="tco-trim">GLS Limited</span>
+          </td>
+          <td class="score-sub">13</td>
+          <td class="score-sub">59</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:31.5%"></div>
+              <span class="tco-anual-num">31.5</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-bev">BEV</span>
+            <span class="tco-brand">Kia EV5</span>
+            <span class="tco-trim">Wave</span>
+          </td>
+          <td class="score-sub">0</td>
+          <td class="score-sub">76</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:30.6%"></div>
+              <span class="tco-anual-num">30.6</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-bev">BEV</span>
+            <span class="tco-brand">Skoda Elroq</span>
+            <span class="tco-trim">85 Design</span>
+          </td>
+          <td class="score-sub">33</td>
+          <td class="score-sub">18</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:27.0%"></div>
+              <span class="tco-anual-num">27.0</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-ice">ICE</span>
+            <span class="tco-brand">Mitsubishi Destinator</span>
+            <span class="tco-trim">GLS</span>
+          </td>
+          <td class="score-sub">29</td>
+          <td class="score-sub">18</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:24.6%"></div>
+              <span class="tco-anual-num">24.6</span>
+            </div>
+          </td>
+        </tr>
+<tr>
+          <td class="tco-model">
+            <span class="tco-tag tco-tag-ice">ICE</span>
+            <span class="tco-brand">Skoda Kodiaq</span>
+            <span class="tco-trim">Selection MHEV</span>
+          </td>
+          <td class="score-sub">1</td>
+          <td class="score-sub">18</td>
+          <td class="tco-anual">
+            <div class="tco-bar-wrap">
+              <div class="tco-bar score-bar" style="width:7.9%"></div>
+              <span class="tco-anual-num">7.9</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="legend">
+      <span>Normalización min-max: el más caro/pelado del grupo saca 0, el más barato/equipado saca 100 — sensible a outliers, ver nota abajo.</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
       <h2 class="section-title">Equipamiento de confort</h2>
       <span class="section-note">21 ítems · trims tope de cada modelo</span>
     </div>
@@ -692,7 +858,7 @@ table.matrix {
         </th>
 <th class="modelhead energy-bev">
           <span class="mh-brand">Chevrolet Captiva EV</span>
-          <span class="mh-trim">Premier</span>
+          <span class="mh-trim">60kWh</span>
         </th>
 <th class="modelhead energy-bev">
           <span class="mh-brand">Tesla Model Y</span>
@@ -720,7 +886,7 @@ table.matrix {
         </th>
 <th class="modelhead energy-phev">
           <span class="mh-brand">Mitsubishi Outlander</span>
-          <span class="mh-trim">PHEV GLS</span>
+          <span class="mh-trim">PHEV GLS Limited</span>
         </th>
 <th class="modelhead energy-ice">
           <span class="mh-brand">Mitsubishi Destinator</span>
@@ -778,8 +944,8 @@ table.matrix {
       <p>Precio, potencia y ADAS de seguridad vienen casi siempre de ficha oficial (confianza alta). Mantención anual y reventa a 5 años son estimaciones — ningún modelo 2025-2026 tiene historial real en Chile todavía.</p>
     </div>
     <div>
-      <h3>Tesla Model Y — caveat</h3>
-      <p>tesla.com/es_cl bloquea el scraping — precio y ficha se tomaron de tu captura de pantalla (fuente primaria) y se completaron con datos del trim global equivalente. El bono Scotiabank de $7M vence 31-jul-2026; no se confirmó en texto explícito si aplica también a compra al contado o solo financiada.</p>
+      <h3>Precios revalidados 17-jul</h3>
+      <p>El supuesto "bono Scotiabank $7M" del Model Y resultó ser una campaña de Banco Santander ya vencida (31-may-2026) — Scotiabank solo da tasa preferencial, no bono en efectivo. Precio real hoy: $39,9M, sin descuento. El Elroq también perdió su oferta "Mes del Rock" ($29,99M → $39,99M) — verificado dos veces en skoda.cl, sin encontrarla vigente (a la espera de que confirmes dónde la viste, por si el sitio la trae de vuelta).</p>
     </div>
   </div>
 
