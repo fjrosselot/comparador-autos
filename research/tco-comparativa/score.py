@@ -37,7 +37,7 @@ n_items = len(matrix)  # 18 — se retiró "faros LED matrix/adaptivo" del anál
 
 # TCO total 5 años CON wallbox (mismo trim que la matriz de confort)
 tco_total5 = {
-    "elroq": 26_712_138,
+    "elroq": 20_712_138,
     "cev":   19_671_825,
     "tsy":   25_713_475,
     "p19":   None,  # no es candidato de compra, es tu auto actual

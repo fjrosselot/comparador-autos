@@ -23,9 +23,9 @@ contra el sitio oficial de cada marca (no agregadores) — ver hallazgos abajo.
 
 | Modelo | Trim (comfort) | Precio contado | Notas |
 |---|---|---|---|
-| Skoda Elroq | 85 Design | $39.990.000 (bono directo) | La oferta "Mes del Rock" ($29,99M) NO se encontró vigente en 2 verificaciones independientes (WebFetch + agent-browser) contra skoda.cl. Usuario insiste en que sigue existiendo — pendiente que confirme fuente/screenshot |
+| Skoda Elroq | 85 Design · Mes del Rock | $29.990.000 | Confirmado vigente — está en el CARROUSEL de la portada skoda.cl como imagen raster (no texto DOM), por eso 2 chequeos previos (WebFetch + agent-browser a /elroq/elroq) no lo vieron. Screenshot de evidencia en scratchpad de sesión (ya no persiste) |
 | Chevrolet Captiva EV | 60kWh | $27.990.000 | bajó $1M vs. dato anterior ($28,99M) |
-| Tesla Model Y | Premium LR RWD | $39.900.000 | El "bono Scotiabank $7M" no existe — era campaña Banco Santander, vencida 31-may-2026. Scotiabank solo da tasa preferencial (0,99%), no bono en efectivo. Precio confirmado en vivo en el configurador tesla.com/es_cl, sin descuento visible |
+| Tesla Model Y | Premium LR RWD | $39.900.000 | Bono $7M confirmado real y vigente (letra chica scotiabankchile.cl nota 3: "responsabilidad exclusiva de Tesla", sin condición de banco — y Banco Santander promociona el mismo bono, prueba de que no es exclusivo de ningún banco), pero **ya viene incluido en el precio de lista mostrado** — no es un descuento aparte a aplicar. $43,9M (precio pre-bono, dic-2025) − $7M = $36,9M (RWD base hoy), mismo patrón en Long Range RWD |
 | Mitsubishi Outlander PHEV | GLS Limited | $39.990.000 | La versión "GLS" (no Limited) ya no existe en el catálogo — solo queda GLS Limited. Subió $500k vs. dato anterior |
 | Mitsubishi Outlander | GLS Limited 4x4 (bencina) | $38.990.000 | sin cambio |
 | Peugeot 5008 | GT 2026 (MHEV) | $33.990.000 | sin cambio |
@@ -35,12 +35,22 @@ contra el sitio oficial de cada marca (no agregadores) — ver hallazgos abajo.
 | Mitsubishi Destinator | GLS | $28.990.000 | sin cambio, promo vigente hasta 31-jul-2026 |
 | *(referencia, no candidato)* Peugeot 5008 GT Line 2019 | tuyo | — | ficha de equipamiento, no de precio |
 
-Todos los precios de la tabla verificados con fetch directo y/o agent-browser
-contra el sitio oficial de la marca el 17-jul-2026, salvo Elroq (disputado)
-y Peugeot/Destinator (verificados contra dealer oficial, marca no publica
-precio directo). Rutina cloud programada para revalidación nocturna
-(`trig_01MBu9cxnhPfDdccsshHbGYj`) quedó **desactivada** — se hizo en vivo
-en la misma sesión al reiniciarse la ventana de 5h.
+Todos los precios verificados en vivo (WebFetch y/o agent-browser) contra el
+sitio oficial de cada marca el 17-jul-2026 — incluyendo las dos disputas
+Elroq/Tesla, ambas resueltas a favor del usuario tras una segunda ronda de
+verificación más específica (carrousel de portada / letra chica completa).
+Lección: un "no encontrado" en un primer chequeo no es concluyente si la
+promo está en un banner rotativo (imagen raster) o en un texto legal que
+requiere clic aparte — vale la pena una segunda pasada dirigida antes de
+descartar una promoción que el usuario reporta ver. Rutina cloud programada
+para revalidación nocturna (`trig_01MBu9cxnhPfDdccsshHbGYj`) quedó
+**desactivada** — se hizo en vivo en la misma sesión al reiniciarse la
+ventana de 5h.
+
+**Ranking final (60% TCO / 40% confort):** 1° Outlander PHEV GLS Limited
+(62,2) · 2° Skoda Elroq (61,1) · 3° Captiva EV (60,0) · 4° 5008 GT 2026
+(50,7) · 5° Tesla Model Y (44,5) · 6° Outlander bencina (33,8) · 7° Kia EV5
+Wave (28,2) · 8° Destinator (24,6) · 9° Kodiaq (10,3). Top 3 muy peleado.
 
 ## Metodología del puntaje combinado (score.py)
 - TCO score y Confort score se normalizan 0-100 (min-max) **dentro del grupo

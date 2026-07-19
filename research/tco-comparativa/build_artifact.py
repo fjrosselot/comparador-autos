@@ -13,7 +13,7 @@ PS  = b64("ps.b64")        # IBM Plex Sans variable (400-600)
 tco_rows = [
     ("Chevrolet Captiva PHEV", "Premier", "PHEV", 26_990_000, 18_240_389, 3_408_078, "phev"),
     ("Chevrolet Captiva EV", "60kWh", "BEV", 27_990_000, 19_671_825, 3_694_365, "bev"),
-    ("Skoda Elroq", "85 Design · bono directo", "BEV", 39_990_000, 26_712_138, 5_102_428, "bev"),
+    ("Skoda Elroq", "85 Design · Mes del Rock", "BEV", 29_990_000, 20_712_138, 3_902_428, "bev"),
     ("Mitsubishi Outlander PHEV", "GLS Limited", "PHEV", 39_990_000, 22_588_649, 4_277_730, "phev"),
     ("Mitsubishi Destinator", "GL", "Gasolina", 20_490_000, 22_677_180, 4_535_436, "ice"),
     ("Mitsubishi Outlander", "GL 4x2", "Gasolina", 25_990_000, 23_366_304, 4_673_261, "ice"),
@@ -31,7 +31,7 @@ max_anual = max(r[5] for r in tco_rows)
 
 # ---------------------------------------------------------------- Comfort matrix
 MODELS = [
-    ("elroq", "Skoda Elroq", "85 Design", "bev"),
+    ("elroq", "Skoda Elroq", "85 Design · Mes del Rock", "bev"),
     ("cev", "Chevrolet Captiva EV", "60kWh", "bev"),
     ("tsy", "Tesla Model Y", "Premium LR RWD", "bev"),
     ("p19", "Peugeot 5008", "GT Line 2019 · tuyo", "ref"),
@@ -127,7 +127,7 @@ def tco_rows_html():
 # ---------------------------------------------------------------- Combined score
 W_TCO, W_COMFORT = 0.60, 0.40
 tco_total5_by_key = {
-    "elroq": 26_712_138, "cev": 19_671_825, "tsy": 25_713_475, "p19": None,
+    "elroq": 20_712_138, "cev": 19_671_825, "tsy": 25_713_475, "p19": None,
     "p26": 28_339_262, "kod": 30_072_334, "ev5": 30_223_200,
     "outl": 28_826_304, "outp": 22_588_649, "dest": 27_139_680,
 }
@@ -717,7 +717,7 @@ table.matrix {{
     </div>
     <div>
       <h3>Precios revalidados 17-jul</h3>
-      <p>El supuesto "bono Scotiabank $7M" del Model Y resultó ser una campaña de Banco Santander ya vencida (31-may-2026) — Scotiabank solo da tasa preferencial, no bono en efectivo. Precio real hoy: $39,9M, sin descuento. El Elroq también perdió su oferta "Mes del Rock" ($29,99M → $39,99M) — verificado dos veces en skoda.cl, sin encontrarla vigente (a la espera de que confirmes dónde la viste, por si el sitio la trae de vuelta).</p>
+      <p>Bono Scotiabank $7M del Model Y: confirmado real y vigente, pero ya viene incluido en el precio de lista mostrado ($39,9M) — no es un cupón aparte que se aplica al pagar. El Elroq "Mes del Rock" ($29,99M) también se confirmó vigente — estaba en el carrousel de la portada (imagen raster, no texto), por eso los primeros 2 chequeos a la subpágina del modelo no lo vieron.</p>
     </div>
   </div>
 

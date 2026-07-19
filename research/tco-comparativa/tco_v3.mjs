@@ -52,8 +52,8 @@ const CANDIDATES = [
     datos: { consumo: { mixtoL100: 7.75 }, mantencion: { anualCLP: 450_000 }, reventa: { pct5yr: 0.50 } },
   },
   {
-    brand: 'Skoda Elroq', trim: '85 Design (BEV) — bono directo',
-    combustible: 'BEV', precio_lista: 44_990_000, precio_contado: 39_990_000,
+    brand: 'Skoda Elroq', trim: '85 Design (BEV) — Mes del Rock',
+    combustible: 'BEV', precio_lista: 44_990_000, precio_contado: 29_990_000,
     datos: { consumo: { electricoKwh100: 15.15 }, mantencion: { anualCLP: 215_000 }, reventa: { pct5yr: 0.40 } },
   },
   {
